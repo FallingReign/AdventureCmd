@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Maps">
+      <UniqueIdentifier>{a0ba6521-34c8-41d3-8f70-9d4651587c93}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Waypoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Maps\battle.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map000.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map001.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map002.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map003.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map004.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map005.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map010.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map011.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map012.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map013.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map014.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map015.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map020.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map021.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map022.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map023.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map024.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map025.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map100.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map101.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map102.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map110.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map111.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map112.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map120.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map121.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map130.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map131.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\map200.dat">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Maps\title.dat">
+      <Filter>Maps</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,57 @@
+﻿Build started 2/09/2014 8:59:16 PM.
+     1>Project "C:\Users\Jess\Documents\GitHub\AdventureCmd\Map Editor\Map Editor.vcxproj" on node 3 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\jess\documents\github\adventurecmd\map editor\main.cpp(65): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>c:\users\jess\documents\github\adventurecmd\map editor\main.cpp(87): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>c:\users\jess\documents\github\adventurecmd\map editor\main.cpp(97): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>c:\users\jess\documents\github\adventurecmd\map editor\main.cpp(109): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>c:\users\jess\documents\github\adventurecmd\map editor\main.cpp(124): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>c:\users\jess\documents\github\adventurecmd\map editor\main.cpp(128): warning C4244: '=' : conversion from 'WORD' to 'char', possible loss of data
+     1>c:\users\jess\documents\github\adventurecmd\map editor\main.cpp(139): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>c:\users\jess\documents\github\adventurecmd\map editor\main.cpp(143): warning C4244: '=' : conversion from 'WORD' to 'char', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Map Editor.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Map Editor.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Map Editor.lib" /MACHINE:X86 Debug\Canvas.obj
+         Debug\main.obj
+         Map Editor.vcxproj -> C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Map Editor.exe
+       PostBuildEvent:
+         xcopy /y C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\*.dat C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Maps\
+         :VCEnd
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\battle.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map000.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map001.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map002.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map003.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map004.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map005.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map010.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map011.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map012.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map013.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map014.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map015.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map020.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map021.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map022.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map023.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map024.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map025.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map100.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map101.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map102.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map110.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map111.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map112.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map120.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map121.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map130.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map131.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map200.dat
+         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\title.dat
+         31 File(s) copied
+     1>Done Building Project "C:\Users\Jess\Documents\GitHub\AdventureCmd\Map Editor\Map Editor.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.44
