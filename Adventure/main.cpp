@@ -181,9 +181,9 @@ int main()
 	COORD mPos = {(console.width/2) - (mSize.Right/2),17};
 	Interface menu(console, mPos, mSize);
 	menu.addRow("Play Game");
+	menu.addRow("Multiplayer");
 	menu.addRow("Show Help");
 	menu.addRow("Quit Game");
-	menu.addRow("Start Server");
 
 	// create the instuctions menu
 	SMALL_RECT hSize = {0,0,74,helpSize+10};
@@ -715,7 +715,11 @@ int main()
 			{
 				if ((GetAsyncKeyState(0x31) || GetAsyncKeyState(VK_NUMPAD1)) || (GetAsyncKeyState(VK_ESCAPE) & 0x8000))			// Key 1 detection (Play Game)
 					option = 1;
-				else if (GetAsyncKeyState(0x32) || GetAsyncKeyState(VK_NUMPAD2))	// Key 2 detection (Instructions)
+				else if (GetAsyncKeyState(0x32) || GetAsyncKeyState(VK_NUMPAD3))	// Key 2 detection (Multiplayer)
+				{
+					// add multiplayer code
+				}
+				else if (GetAsyncKeyState(0x33) || GetAsyncKeyState(VK_NUMPAD2))	// Key 3 detection (Instructions)
 				{
 					if (!displayHelp)
 					{
@@ -729,7 +733,7 @@ int main()
 						displayHelp = 0;
 					}
 				}
-				else if (GetAsyncKeyState(0x33) || GetAsyncKeyState(VK_NUMPAD3))	// Key 3 detection (Quit)
+				else if (GetAsyncKeyState(0x34) || GetAsyncKeyState(VK_NUMPAD3))	// Key 4 detection (Quit)
 				{
 					gameover = 1;
 					option = 1;
