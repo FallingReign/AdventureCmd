@@ -85,33 +85,33 @@ string lootDrops[lootDropRows][5] = {
 	{"Gold", "gold", "50", "1"},
 	{"Chapati", "consumable", "25", "2"},
 
-	{"Sword", "weapon", "5", "2"},
-	{"Longsword", "weapon", "3", "8"},
+	{"Sword", "weapon", "10", "2"},
+	{"Longsword", "weapon", "5", "8"},
 	{"Bloodsword", "weapon", "2", "20"},
 	{"Soultaker", "weapon", "1", "40"},
 
-	{"Bow", "weapon", "5", "2"},
-	{"Longbow", "weapon", "3", "8"},
+	{"Bow", "weapon", "10", "2"},
+	{"Longbow", "weapon", "5", "8"},
 	{"Crossbow", "weapon", "2", "20"},
 	{"Lichbane", "weapon", "1", "40"},
 
-	{"Axe", "weapon", "5", "2"},
-	{"Great Axe", "weapon", "3", "8"},
+	{"Axe", "weapon", "10", "2"},
+	{"Great Axe", "weapon", "5", "8"},
 	{"Vorpal Axe", "weapon", "2", "20"},
 	{"Interceptor", "weapon", "1", "40"},
 
-	{"Mace", "weapon", "5", "2"},
-	{"Iron Mace", "weapon", "3", "8"},
+	{"Mace", "weapon", "10", "2"},
+	{"Iron Mace", "weapon", "5", "8"},
 	{"Chrono Mace", "weapon", "2", "20"},
 	{"Eliminator", "weapon", "1", "40"},
 
-	{"Staff", "weapon", "5", "2"},
-	{"Glowstaff", "weapon", "3", "8"},
+	{"Staff", "weapon", "10", "2"},
+	{"Glowstaff", "weapon", "5", "8"},
 	{"Battle Staff", "weapon", "2", "20"},
 	{"Inferno", "weapon", "1", "40"},
 
-	{"Wand", "weapon", "5", "2"},
-	{"Spiral Wand", "weapon", "3", "8"},
+	{"Wand", "weapon", "10", "2"},
+	{"Spiral Wand", "weapon", "5", "8"},
 	{"Scepter", "weapon", "2", "20"},
 	{"Starfall", "weapon", "1", "40"},
 
@@ -183,6 +183,7 @@ int main()
 	menu.addRow("Play Game");
 	menu.addRow("Show Help");
 	menu.addRow("Quit Game");
+	menu.addRow("Start Server");
 
 	// create the instuctions menu
 	SMALL_RECT hSize = {0,0,74,helpSize+10};
