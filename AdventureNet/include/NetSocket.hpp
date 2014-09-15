@@ -17,6 +17,8 @@ namespace anet
         NetSocket(Type type);
         virtual ~NetSocket();
 
+        void setBlocking(bool block = true);
+
     protected:
         void init();
         void uninit();

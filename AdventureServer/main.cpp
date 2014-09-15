@@ -8,15 +8,25 @@
 
 #include <WinSock2.h>
 
+#include "Server.hpp"
 
 void runServer()
 {
-    anet::UdpSocket serverSock;
-    serverSock.bind(32002);
+    Server server;
 
-    anet::NetBuffer buffer;
-    anet::NetAddress addr;
-    int bytes = serverSock.receive(buffer, addr);
+    bool quitting = false;
+    
+    server.Start();
+    while (!quitting)
+    {
+        std::string cmd;
+        std::getline(std::cin, cmd);
+
+        if (cmd == "quit")
+            quitting = true;
+    }
+
+    server.Stop();
 }
 
 void runClient()
@@ -28,7 +38,7 @@ void runClient()
 
     anet::NetAddress addr("127.0.0.1", 32002);
     anet::NetBuffer buffer;
-    buffer << (int)10;
+    buffer << (anet::UInt16)50322 << (anet::UInt8)0;
     clientSock.send(buffer, addr);
 }
 

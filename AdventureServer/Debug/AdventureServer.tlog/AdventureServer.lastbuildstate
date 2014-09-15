@@ -1,6 +1,2 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v120:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit
-<<<<<<< HEAD
 Debug|Win32|J:\CodeBase\projects\Adventure\|
-=======
-Debug|Win32|C:\Users\Jess\Documents\GitHub\AdventureCmd\|
->>>>>>> 43ff3823653b36b2a6961ace2f3ce1565f665d04

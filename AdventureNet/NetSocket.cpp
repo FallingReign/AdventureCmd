@@ -12,6 +12,14 @@ NetSocket::~NetSocket()
 {
 }
 
+void NetSocket::setBlocking(bool block)
+{
+    u_long doBlock = (block) ? 0 : 1;
+
+    if (m_sockid != INVALID_SOCKET)
+        ::ioctlsocket(m_sockid, FIONBIO, &doBlock);
+}
+
 void NetSocket::init()
 {
     if (m_sockid == INVALID_SOCKET)
