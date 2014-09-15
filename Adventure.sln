@@ -1,9 +1,21 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Adventure", "Adventure\Adventure.vcxproj", "{21BFA957-A594-4CCE-A9DB-CAB8B14211EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9BB909F6-5936-4C57-BFDC-A442F5477527} = {9BB909F6-5936-4C57-BFDC-A442F5477527}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Map Editor", "Map Editor\Map Editor.vcxproj", "{F470A101-CBD5-4070-8489-E46D46CD8244}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdventureNet", "AdventureNet\AdventureNet.vcxproj", "{9BB909F6-5936-4C57-BFDC-A442F5477527}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdventureServer", "AdventureServer\AdventureServer.vcxproj", "{1649C89B-CDC0-4FB8-991B-D142EB309A4E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9BB909F6-5936-4C57-BFDC-A442F5477527} = {9BB909F6-5936-4C57-BFDC-A442F5477527}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +31,14 @@ Global
 		{F470A101-CBD5-4070-8489-E46D46CD8244}.Debug|Win32.Build.0 = Debug|Win32
 		{F470A101-CBD5-4070-8489-E46D46CD8244}.Release|Win32.ActiveCfg = Release|Win32
 		{F470A101-CBD5-4070-8489-E46D46CD8244}.Release|Win32.Build.0 = Release|Win32
+		{9BB909F6-5936-4C57-BFDC-A442F5477527}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9BB909F6-5936-4C57-BFDC-A442F5477527}.Debug|Win32.Build.0 = Debug|Win32
+		{9BB909F6-5936-4C57-BFDC-A442F5477527}.Release|Win32.ActiveCfg = Release|Win32
+		{9BB909F6-5936-4C57-BFDC-A442F5477527}.Release|Win32.Build.0 = Release|Win32
+		{1649C89B-CDC0-4FB8-991B-D142EB309A4E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1649C89B-CDC0-4FB8-991B-D142EB309A4E}.Debug|Win32.Build.0 = Debug|Win32
+		{1649C89B-CDC0-4FB8-991B-D142EB309A4E}.Release|Win32.ActiveCfg = Release|Win32
+		{1649C89B-CDC0-4FB8-991B-D142EB309A4E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
