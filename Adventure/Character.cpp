@@ -201,7 +201,7 @@ void Character::BattleStatUpdate(Character& character, double timer, COORD pos)
 	cout << int((timer > 10 ? 10 : timer)*10) << "%  ";
 
 	console.setCursorPos(pos.X, pos.Y+=2);
-	cout << "Attack:     " << character.attack;
+	cout << "Attack:     " << character.attack + character.weapondmg;
 	console.setCursorPos(pos.X, pos.Y+=1);
 	cout << "Defence:    " << character.defence;
 	console.setCursorPos(pos.X, pos.Y+=1);

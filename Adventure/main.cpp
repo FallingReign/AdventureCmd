@@ -171,6 +171,8 @@ int main()
 	
 	// Create the player character and set to default position
 	Character player(console, newWorld, "Rodney", tLoc, 5, 1, 2, 5);
+	tLoc.X++;
+	Character ally(console, newWorld, "Ally", tLoc, 5, 1, 2, 5);
 
 	// create title menu map/background
 	Map title(console);
