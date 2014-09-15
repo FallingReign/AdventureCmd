@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 9/15/2014 9:57:44 PM.
      1>Project "J:\CodeBase\projects\Adventure\AdventureServer\AdventureServer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -12,3 +13,14 @@
 Build succeeded.
 
 Time Elapsed 00:00:00.89
+=======
+﻿Build started 15/09/2014 8:55:04 PM.
+     1>Project "C:\Users\Jess\Documents\GitHub\AdventureCmd\AdventureServer\AdventureServer.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         AdventureServer.vcxproj -> C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\AdventureServer.exe
+     1>Done Building Project "C:\Users\Jess\Documents\GitHub\AdventureCmd\AdventureServer\AdventureServer.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.16
+>>>>>>> 43ff3823653b36b2a6961ace2f3ce1565f665d04

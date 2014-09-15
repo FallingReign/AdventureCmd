@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 9/15/2014 9:55:42 PM.
      1>Project "J:\CodeBase\projects\Adventure\AdventureNet\AdventureNet.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -18,3 +19,14 @@
 Build succeeded.
 
 Time Elapsed 00:00:03.95
+=======
+﻿Build started 15/09/2014 9:04:02 PM.
+     1>Project "C:\Users\Jess\Documents\GitHub\AdventureCmd\AdventureNet\AdventureNet.vcxproj" on node 2 (Build target(s)).
+     1>Lib:
+         AdventureNet.vcxproj -> C:\Users\Jess\Documents\GitHub\AdventureCmd\AdventureNet\\lib\AdventureNet_d.lib
+     1>Done Building Project "C:\Users\Jess\Documents\GitHub\AdventureCmd\AdventureNet\AdventureNet.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.47
+>>>>>>> 43ff3823653b36b2a6961ace2f3ce1565f665d04
