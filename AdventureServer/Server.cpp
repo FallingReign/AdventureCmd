@@ -97,6 +97,13 @@ void Server::RunThread()
                     std::cout << "New Client joined! (" << addr.getIP() << ":" << addr.getPort() << ")\n";
                     AddClient(addr);
                     break;
+                case 1: // Position Reporting
+                {
+                    anet::Int32 x, y;
+                    buffer >> x >> y;
+                    std::cout << "Client (" << clientHash << ") moved to: (" << x << ", " << y << ")\n";
+                    break;
+                }
                 }
 
                 // Reset the timeout of the client that sent the message (if possible).
@@ -112,6 +119,17 @@ void Server::RunThread()
             else
             {
                 std::cout << "Invalid protocol!\n";
+            }
+        }
+        else if (bytesRecv == 0)
+        {
+            std::cout << "No Data.\n";
+        }
+        else if (bytesRecv < 0)
+        {
+            if (WSAGetLastError() != WSAEWOULDBLOCK)
+            {
+                std::cout << "Error code: " << WSAGetLastError() << "\n";
             }
         }
 
