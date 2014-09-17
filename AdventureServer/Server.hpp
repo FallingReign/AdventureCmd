@@ -15,6 +15,8 @@ enum class MessageType
     : anet::UInt8
 {
     Connection,
+    Disconnection,
+    ClientListing,
     Position,
     Room
 };
@@ -31,7 +33,14 @@ public:
 private:
     unsigned int AddClient(const anet::NetAddress& addr);
     void RemoveClient();
+    
+    void HandleConnection(const anet::NetAddress& addr);
+    void HandlePosition(unsigned int clientHash, int x, int y);
+    void HandleRoomChange(unsigned int clientHash, int roomid);
+    
     void RunThread();
+
+    int ForwardToClients(anet::NetBuffer& inBuffer, unsigned int inExclude = 0);
 
     static unsigned int ClientHashFunc(const anet::NetAddress& addr);
 

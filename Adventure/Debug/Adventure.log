@@ -1,16 +1,46 @@
-﻿Build started 15/09/2014 9:44:16 PM.
-     1>Project "C:\Users\Jess\Documents\GitHub\AdventureCmd\Adventure\Adventure.vcxproj" on node 2 (Build target(s)).
+﻿Build started 9/17/2014 9:01:37 PM.
+     1>Project "J:\CodeBase\projects\Adventure\Adventure\Adventure.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Character.cpp NPC.cpp Interface.cpp Item.cpp main.cpp Map.cpp Objects.cpp Trigger.cpp Waypoint.cpp Window.cpp
+         Window.cpp
+     1>j:\codebase\projects\adventure\adventure\window.cpp(36): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>j:\codebase\projects\adventure\adventure\window.cpp(59): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+         Waypoint.cpp
+         Trigger.cpp
+         Objects.cpp
+         Map.cpp
          main.cpp
-     1>c:\users\jess\documents\github\adventurecmd\adventure\main.cpp(888): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jess\documents\github\adventurecmd\adventure\main.cpp(923): warning C4244: '+=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\jess\documents\github\adventurecmd\adventure\main.cpp(1320): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jess\documents\github\adventurecmd\adventure\main.cpp(1331): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jess\documents\github\adventurecmd\adventure\main.cpp(1463): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jess\documents\github\adventurecmd\adventure\main.cpp(1620): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(883): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(918): warning C4244: '+=' : conversion from 'double' to 'int', possible loss of data
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1315): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1326): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1458): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1615): warning C4018: '<' : signed/unsigned mismatch
+         Item.cpp
+         Interface.cpp
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(61): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(401): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(420): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(423): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(506): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(511): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(546): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(555): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\interface.cpp(561): warning C4018: '<' : signed/unsigned mismatch
+         NPC.cpp
+         Character.cpp
+     1>j:\codebase\projects\adventure\adventure\character.cpp(8): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\adventure\character.cpp(32): warning C4309: 'initializing' : truncation of constant value
+     1>j:\codebase\projects\adventure\adventure\character.cpp(215): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\adventure\character.cpp(220): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\adventure\character.cpp(226): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\adventure\character.cpp(231): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\adventure\character.cpp(248): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\character.cpp(285): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>j:\codebase\projects\adventure\adventure\character.cpp(323): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Adventure.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Adventure.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Adventure.lib" /MACHINE:X86 Debug\Character.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\CodeBase\projects\Adventure\Debug\Adventure.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"J:\CodeBase\projects\Adventure\Debug\Adventure.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\CodeBase\projects\Adventure\Debug\Adventure.lib" /MACHINE:X86 Debug\Character.obj
          Debug\NPC.obj
          Debug\Interface.obj
          Debug\Item.obj
@@ -20,44 +50,44 @@
          Debug\Trigger.obj
          Debug\Waypoint.obj
          Debug\Window.obj
-         Adventure.vcxproj -> C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Adventure.exe
+         Adventure.vcxproj -> J:\CodeBase\projects\Adventure\Debug\Adventure.exe
        PostBuildEvent:
-         xcopy /y C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\*.dat C:\Users\Jess\Documents\GitHub\AdventureCmd\Debug\Maps\
+         xcopy /y J:\CodeBase\projects\Adventure\Maps\*.dat J:\CodeBase\projects\Adventure\Debug\Maps\
          :VCEnd
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\battle.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map000.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map001.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map002.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map003.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map004.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map005.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map010.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map011.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map012.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map013.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map014.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map015.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map020.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map021.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map022.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map023.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map024.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map025.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map100.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map101.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map102.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map110.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map111.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map112.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map120.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map121.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map130.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map131.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\map200.dat
-         C:\Users\Jess\Documents\GitHub\AdventureCmd\Maps\title.dat
+         J:\CodeBase\projects\Adventure\Maps\battle.dat
+         J:\CodeBase\projects\Adventure\Maps\map000.dat
+         J:\CodeBase\projects\Adventure\Maps\map001.dat
+         J:\CodeBase\projects\Adventure\Maps\map002.dat
+         J:\CodeBase\projects\Adventure\Maps\map003.dat
+         J:\CodeBase\projects\Adventure\Maps\map004.dat
+         J:\CodeBase\projects\Adventure\Maps\map005.dat
+         J:\CodeBase\projects\Adventure\Maps\map010.dat
+         J:\CodeBase\projects\Adventure\Maps\map011.dat
+         J:\CodeBase\projects\Adventure\Maps\map012.dat
+         J:\CodeBase\projects\Adventure\Maps\map013.dat
+         J:\CodeBase\projects\Adventure\Maps\map014.dat
+         J:\CodeBase\projects\Adventure\Maps\map015.dat
+         J:\CodeBase\projects\Adventure\Maps\map020.dat
+         J:\CodeBase\projects\Adventure\Maps\map021.dat
+         J:\CodeBase\projects\Adventure\Maps\map022.dat
+         J:\CodeBase\projects\Adventure\Maps\map023.dat
+         J:\CodeBase\projects\Adventure\Maps\map024.dat
+         J:\CodeBase\projects\Adventure\Maps\map025.dat
+         J:\CodeBase\projects\Adventure\Maps\map100.dat
+         J:\CodeBase\projects\Adventure\Maps\map101.dat
+         J:\CodeBase\projects\Adventure\Maps\map102.dat
+         J:\CodeBase\projects\Adventure\Maps\map110.dat
+         J:\CodeBase\projects\Adventure\Maps\map111.dat
+         J:\CodeBase\projects\Adventure\Maps\map112.dat
+         J:\CodeBase\projects\Adventure\Maps\map120.dat
+         J:\CodeBase\projects\Adventure\Maps\map121.dat
+         J:\CodeBase\projects\Adventure\Maps\map130.dat
+         J:\CodeBase\projects\Adventure\Maps\map131.dat
+         J:\CodeBase\projects\Adventure\Maps\map200.dat
+         J:\CodeBase\projects\Adventure\Maps\title.dat
          31 File(s) copied
-     1>Done Building Project "C:\Users\Jess\Documents\GitHub\AdventureCmd\Adventure\Adventure.vcxproj" (Build target(s)).
+     1>Done Building Project "J:\CodeBase\projects\Adventure\Adventure\Adventure.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.54
+Time Elapsed 00:00:08.81

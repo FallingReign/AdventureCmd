@@ -46,6 +46,20 @@ void Server::RemoveClient()
 
 }
 
+int Server::ForwardToClients(anet::NetBuffer& inBuffer, unsigned int inExclude)
+{
+    int totalBytes = 0;
+    auto c = m_clients.begin();
+    while (c != m_clients.end())
+    {
+        if (inExclude == 0 || (*c).first != inExclude)
+            totalBytes += m_socket.send(inBuffer, (*c).second.m_address);
+
+        ++c;
+    }
+    return totalBytes;
+}
+
 unsigned int Server::ClientHashFunc(const anet::NetAddress& addr)
 {
     using std::size_t;
@@ -53,6 +67,77 @@ unsigned int Server::ClientHashFunc(const anet::NetAddress& addr)
     using std::string;
     return std::hash<std::string>()(addr.getIP())
         ^ ((std::hash<anet::UInt16>()(addr.getPort()) << 1) >> 1);
+}
+
+void Server::HandleConnection(const anet::NetAddress& addr)
+{
+    unsigned int hash = AddClient(addr);
+
+    anet::NetBuffer connBuffer;
+    connBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Connection;
+
+    if (hash != -1) // Connection Accepted.
+    {
+        // Send a positive response.
+        std::cout << "New Client (" << hash << ") joined! (" << addr.getIP() << ":" << addr.getPort() << ")\n";
+        connBuffer << true;
+        m_socket.send(connBuffer, addr);
+
+        auto& newClient = m_clients[hash];
+
+        // Send a listing of the present clients and the new client.
+        auto c = m_clients.begin();
+        while (c != m_clients.end())
+        {
+            auto& cl = (*c).second;
+
+            if ((*c).first != hash)
+            {
+                // Send the client data to the new client.
+                anet::NetBuffer listingBuffer;
+                listingBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << (*c).first << cl.x << cl.y << cl.roomid;
+                m_socket.send(listingBuffer, addr);
+
+                // Send the new client data to the existing one.
+                anet::NetBuffer addBuffer;
+                addBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << hash << newClient.x << newClient.y << newClient.roomid;
+                m_socket.send(addBuffer, cl.m_address);
+            }
+
+            // Increment.
+            ++c;
+        }
+    }
+    else // Connection refused.
+    {
+        connBuffer << false;
+        std::cout << "Duplicate client. Connection refused.\n";
+    }
+}
+
+void Server::HandlePosition(unsigned int clientHash, int x, int y)
+{
+    //std::cout << "Handling position: " << x << ", " << y << "\n";
+
+    // Update local information.
+    m_clients[clientHash].x = x;
+    m_clients[clientHash].y = y;
+
+    // Forward to other clients.
+    anet::NetBuffer posBuffer;
+    posBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Position << clientHash << x << y;
+    ForwardToClients(posBuffer, clientHash);
+}
+
+void Server::HandleRoomChange(unsigned int clientHash, int roomid)
+{
+    // Update local information.
+    m_clients[clientHash].roomid = roomid;
+
+    // Forward to other clients.
+    anet::NetBuffer roomBuffer;
+    roomBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Room << clientHash << roomid;
+    ForwardToClients(roomBuffer, clientHash);
 }
 
 void Server::RunThread()
@@ -110,28 +195,14 @@ void Server::RunThread()
                 {
                 case MessageType::Connection: // New login
                 {
-                    unsigned int hash = AddClient(addr);
-                    if (hash != -1)
-                        std::cout << "New Client (" << hash << ") joined! (" << addr.getIP() << ":" << addr.getPort() << ")\n";
-                    else
-                        std::cout << "Duplicate client. Connection refused.\n";
-
-                    // Forward new arrival to other clients.
-
-                    // Forward the client listing to the new client.
-
+                    HandleConnection(addr);
                     break;
                 }
                 case MessageType::Position: // Position Reporting
                 {
                     anet::Int32 x, y;
                     buffer >> x >> y;
-                    //std::cout << "Client (" << clientHash << ") moved to: (" << x << ", " << y << ")\n";
-                    m_clients[clientHash].x = x;
-                    m_clients[clientHash].y = y;
-
-                    // Forward to other clients.
-
+                    HandlePosition(clientHash, x, y);
                     break;
                 }
                 case MessageType::Room: // Room changed
@@ -139,12 +210,7 @@ void Server::RunThread()
                     // Get the new room id.
                     anet::Int32 roomid;
                     buffer >> roomid;
-
-                    m_clients[clientHash].roomid = roomid;
-
-                    // Forward to other clients.
-
-
+                    HandleRoomChange(clientHash, roomid);
                     break;
                 }
                 }
@@ -160,7 +226,8 @@ void Server::RunThread()
         }
         else if (bytesRecv < 0)
         {
-            if (WSAGetLastError() != WSAEWOULDBLOCK)
+            int errorCode = WSAGetLastError();
+            if (errorCode != WSAEWOULDBLOCK && errorCode != WSAECONNRESET)
             {
                 std::cout << "Error code: " << WSAGetLastError() << "\n";
             }
@@ -175,9 +242,12 @@ void Server::RunThread()
             if ((*it).second.m_timeout >= Server::MAX_TIMEOUT) // Disconnection
             {
                 // Send out the disconnect packet just incase the client is lagging.
-                //m_socket.send()
-                std::cout << "Client Timed out.\n";
-                // Remove the client.
+                anet::NetBuffer disconBuffer;
+                disconBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Disconnection;
+                m_socket.send(disconBuffer, (*it).second.m_address);
+                
+                std::cout << "Client (" << (*it).first << ") Timed out.\n";
+                // Remove the client from the map.
                 it = m_clients.erase(it);
                 continue;
             }
@@ -185,6 +255,11 @@ void Server::RunThread()
             ++it;
         }
     }
+
+    // Server stopped. Send disconnect messages.
+    anet::NetBuffer disconBuffer;
+    disconBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Disconnection;
+    ForwardToClients(disconBuffer);
 
     std::cout << "Server stopped.\n";
     // Unbind the socket.

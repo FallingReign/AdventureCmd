@@ -8,8 +8,8 @@ class GameClient
 public:
     anet::NetAddress m_address;
     unsigned int m_timeout{ 0 };
-    int x, y;
-    int roomid;
+    int x{ 0 }, y{ 0 };
+    int roomid{ 0 };
 };
 
 #endif

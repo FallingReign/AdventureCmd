@@ -9,6 +9,12 @@ NetBuffer::NetBuffer()
 }
 
 // Write
+NetBuffer& NetBuffer::operator<<(bool inData)
+{
+    writeData(&inData, sizeof(inData));
+    return *this;
+}
+
 NetBuffer& NetBuffer::operator<<(UInt8 inData)
 {
     writeData(&inData, sizeof(inData));
@@ -70,63 +76,69 @@ NetBuffer& NetBuffer::operator<<(Float64 inData)
 }
 
 // Read
-NetBuffer& NetBuffer::operator>>(UInt8& inData)
+NetBuffer& NetBuffer::operator>>(bool& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(Int8& inData)
+NetBuffer& NetBuffer::operator>>(UInt8& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(UInt16& inData)
+NetBuffer& NetBuffer::operator>>(Int8& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(Int16& inData)
+NetBuffer& NetBuffer::operator>>(UInt16& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(UInt32& inData)
+NetBuffer& NetBuffer::operator>>(Int16& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(Int32& inData)
+NetBuffer& NetBuffer::operator>>(UInt32& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(UInt64& inData)
+NetBuffer& NetBuffer::operator>>(Int32& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(Int64& inData)
+NetBuffer& NetBuffer::operator>>(UInt64& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(Float32& inData)
+NetBuffer& NetBuffer::operator>>(Int64& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
     return *this;
 }
 
-NetBuffer& NetBuffer::operator>>(Float64& inData)
+NetBuffer& NetBuffer::operator>>(Float32& outData)
 {
-    readData(&inData, sizeof(inData));
+    readData(&outData, sizeof(outData));
+    return *this;
+}
+
+NetBuffer& NetBuffer::operator>>(Float64& outData)
+{
+    readData(&outData, sizeof(outData));
     return *this;
 }
 

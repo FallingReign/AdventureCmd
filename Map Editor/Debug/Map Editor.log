@@ -1,66 +1,66 @@
-﻿Build started 9/12/2014 4:05:33 PM.
-     1>Project "J:\CodeBase\projects\AdventureCmd\Map Editor\Map Editor.vcxproj" on node 3 (Build target(s)).
+﻿Build started 9/17/2014 9:01:36 PM.
+     1>Project "J:\CodeBase\projects\Adventure\Map Editor\Map Editor.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Canvas.cpp main.cpp
          main.cpp
-     1>j:\codebase\projects\adventurecmd\map editor\main.cpp(65): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
-     1>j:\codebase\projects\adventurecmd\map editor\main.cpp(87): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
-     1>j:\codebase\projects\adventurecmd\map editor\main.cpp(97): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
-     1>j:\codebase\projects\adventurecmd\map editor\main.cpp(109): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
-     1>j:\codebase\projects\adventurecmd\map editor\main.cpp(124): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
-     1>j:\codebase\projects\adventurecmd\map editor\main.cpp(128): warning C4244: '=' : conversion from 'WORD' to 'char', possible loss of data
-     1>j:\codebase\projects\adventurecmd\map editor\main.cpp(139): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
-     1>j:\codebase\projects\adventurecmd\map editor\main.cpp(143): warning C4244: '=' : conversion from 'WORD' to 'char', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\main.cpp(65): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\main.cpp(87): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\main.cpp(97): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\main.cpp(109): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\main.cpp(124): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\main.cpp(128): warning C4244: '=' : conversion from 'WORD' to 'char', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\main.cpp(139): warning C4244: 'initializing' : conversion from 'LONG' to 'SHORT', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\main.cpp(143): warning C4244: '=' : conversion from 'WORD' to 'char', possible loss of data
          Canvas.cpp
-     1>j:\codebase\projects\adventurecmd\map editor\canvas.cpp(34): warning C4309: '=' : truncation of constant value
-     1>j:\codebase\projects\adventurecmd\map editor\canvas.cpp(72): warning C4244: '=' : conversion from 'WORD' to 'char', possible loss of data
-     1>j:\codebase\projects\adventurecmd\map editor\canvas.cpp(159): warning C4309: 'initializing' : truncation of constant value
-     1>j:\codebase\projects\adventurecmd\map editor\canvas.cpp(190): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\map editor\canvas.cpp(34): warning C4309: '=' : truncation of constant value
+     1>j:\codebase\projects\adventure\map editor\canvas.cpp(72): warning C4244: '=' : conversion from 'WORD' to 'char', possible loss of data
+     1>j:\codebase\projects\adventure\map editor\canvas.cpp(159): warning C4309: 'initializing' : truncation of constant value
+     1>j:\codebase\projects\adventure\map editor\canvas.cpp(190): warning C4309: '=' : truncation of constant value
          Generating Code...
-     1>j:\codebase\projects\adventurecmd\map editor\canvas.cpp(122): warning C4700: uninitialized local variable 'read' used
-     1>j:\codebase\projects\adventurecmd\map editor\canvas.cpp(122): warning C4700: uninitialized local variable 'brushAtt' used
-     1>j:\codebase\projects\adventurecmd\map editor\canvas.cpp(123): warning C4700: uninitialized local variable 'brushChar' used
+     1>j:\codebase\projects\adventure\map editor\canvas.cpp(122): warning C4700: uninitialized local variable 'read' used
+     1>j:\codebase\projects\adventure\map editor\canvas.cpp(122): warning C4700: uninitialized local variable 'brushAtt' used
+     1>j:\codebase\projects\adventure\map editor\canvas.cpp(123): warning C4700: uninitialized local variable 'brushChar' used
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\CodeBase\projects\AdventureCmd\Debug\Map Editor.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"J:\CodeBase\projects\AdventureCmd\Debug\Map Editor.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\CodeBase\projects\AdventureCmd\Debug\Map Editor.lib" /MACHINE:X86 Debug\Canvas.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\CodeBase\projects\Adventure\Debug\Map Editor.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"J:\CodeBase\projects\Adventure\Debug\Map Editor.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\CodeBase\projects\Adventure\Debug\Map Editor.lib" /MACHINE:X86 Debug\Canvas.obj
          Debug\main.obj
-         Map Editor.vcxproj -> J:\CodeBase\projects\AdventureCmd\Debug\Map Editor.exe
+         Map Editor.vcxproj -> J:\CodeBase\projects\Adventure\Debug\Map Editor.exe
        PostBuildEvent:
-         xcopy /y J:\CodeBase\projects\AdventureCmd\Maps\*.dat J:\CodeBase\projects\AdventureCmd\Debug\Maps\
+         xcopy /y J:\CodeBase\projects\Adventure\Maps\*.dat J:\CodeBase\projects\Adventure\Debug\Maps\
          :VCEnd
-         J:\CodeBase\projects\AdventureCmd\Maps\battle.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map000.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map001.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map002.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map003.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map004.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map005.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map010.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map011.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map012.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map013.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map014.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map015.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map020.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map021.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map022.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map023.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map024.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map025.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map100.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map101.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map102.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map110.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map111.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map112.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map120.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map121.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map130.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map131.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\map200.dat
-         J:\CodeBase\projects\AdventureCmd\Maps\title.dat
+         J:\CodeBase\projects\Adventure\Maps\battle.dat
+         J:\CodeBase\projects\Adventure\Maps\map000.dat
+         J:\CodeBase\projects\Adventure\Maps\map001.dat
+         J:\CodeBase\projects\Adventure\Maps\map002.dat
+         J:\CodeBase\projects\Adventure\Maps\map003.dat
+         J:\CodeBase\projects\Adventure\Maps\map004.dat
+         J:\CodeBase\projects\Adventure\Maps\map005.dat
+         J:\CodeBase\projects\Adventure\Maps\map010.dat
+         J:\CodeBase\projects\Adventure\Maps\map011.dat
+         J:\CodeBase\projects\Adventure\Maps\map012.dat
+         J:\CodeBase\projects\Adventure\Maps\map013.dat
+         J:\CodeBase\projects\Adventure\Maps\map014.dat
+         J:\CodeBase\projects\Adventure\Maps\map015.dat
+         J:\CodeBase\projects\Adventure\Maps\map020.dat
+         J:\CodeBase\projects\Adventure\Maps\map021.dat
+         J:\CodeBase\projects\Adventure\Maps\map022.dat
+         J:\CodeBase\projects\Adventure\Maps\map023.dat
+         J:\CodeBase\projects\Adventure\Maps\map024.dat
+         J:\CodeBase\projects\Adventure\Maps\map025.dat
+         J:\CodeBase\projects\Adventure\Maps\map100.dat
+         J:\CodeBase\projects\Adventure\Maps\map101.dat
+         J:\CodeBase\projects\Adventure\Maps\map102.dat
+         J:\CodeBase\projects\Adventure\Maps\map110.dat
+         J:\CodeBase\projects\Adventure\Maps\map111.dat
+         J:\CodeBase\projects\Adventure\Maps\map112.dat
+         J:\CodeBase\projects\Adventure\Maps\map120.dat
+         J:\CodeBase\projects\Adventure\Maps\map121.dat
+         J:\CodeBase\projects\Adventure\Maps\map130.dat
+         J:\CodeBase\projects\Adventure\Maps\map131.dat
+         J:\CodeBase\projects\Adventure\Maps\map200.dat
+         J:\CodeBase\projects\Adventure\Maps\title.dat
          31 File(s) copied
-     1>Done Building Project "J:\CodeBase\projects\AdventureCmd\Map Editor\Map Editor.vcxproj" (Build target(s)).
+     1>Done Building Project "J:\CodeBase\projects\Adventure\Map Editor\Map Editor.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.75
+Time Elapsed 00:00:08.26

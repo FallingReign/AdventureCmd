@@ -1,16 +1,20 @@
-﻿Build started 9/16/2014 1:18:57 AM.
-     1>Project "J:\CodeBase\projects\Adventure\AdventureNet\AdventureNet.vcxproj" on node 2 (Build target(s)).
+﻿Build started 9/17/2014 3:19:07 PM.
+     1>Project "J:\CodeBase\projects\Adventure\AdventureNet\AdventureNet.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt NetSocket.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt NetAddress.cpp NetBuffer.cpp NetSocket.cpp UdpSocket.cpp
+         UdpSocket.cpp
          NetSocket.cpp
+         NetBuffer.cpp
+         NetAddress.cpp
+         Generating Code...
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"J:\CodeBase\projects\Adventure\AdventureNet\\lib\AdventureNet_d.lib" ws2_32.lib /NOLOGO Debug\NetAddress.obj
          Debug\NetBuffer.obj
          Debug\NetSocket.obj
          Debug\UdpSocket.obj
          AdventureNet.vcxproj -> J:\CodeBase\projects\Adventure\AdventureNet\\lib\AdventureNet_d.lib
-     1>Done Building Project "J:\CodeBase\projects\Adventure\AdventureNet\AdventureNet.vcxproj" (Build target(s)).
+     1>Done Building Project "J:\CodeBase\projects\Adventure\AdventureNet\AdventureNet.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.49
+Time Elapsed 00:00:02.06

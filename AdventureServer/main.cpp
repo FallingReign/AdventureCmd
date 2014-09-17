@@ -32,6 +32,7 @@ void runServer()
 
 void runClient()
 {
+    std::unordered_map<int, GameClient> clients;
     anet::UdpSocket clientSock;
 
     // Bind to any available port.
@@ -42,23 +43,96 @@ void runClient()
     buffer << (anet::UInt16)50322 << (anet::UInt8)0;
     clientSock.send(buffer, addr);
 
+    anet::NetBuffer conBuffer;
+    anet::NetAddress serverAddr;
+    clientSock.receive(conBuffer, serverAddr);
+
+    anet::UInt16 protocolID;
+    anet::Int8 messageID;
+    bool confirm;
+
+    conBuffer >> protocolID >> messageID >> confirm;
+
+    if (!confirm)
+    {
+        std::cout << "Failed to connect!\n";
+        clientSock.unBind();
+        return;
+    }
+
     Timer clientTimer;
     unsigned int accTime = 0;
     anet::Int32 x = 0, y = 0;
-    while (true)
+
+    clientSock.setBlocking(false);
+    bool running = true;
+    while (running)
     {
         accTime += clientTimer.Restart();
-        if (accTime > (1000 / 60))
+        if (accTime >= (1000 / 60))
         {
             x += 1;
             y += 2;
 
             anet::NetBuffer posBuffer;
-            posBuffer << (anet::UInt16)50322 << (anet::UInt8)1 << (anet::Int32)x << (anet::Int32)y;
+            posBuffer << (anet::UInt16)50322 << (anet::UInt8)3 << (anet::Int32)x << (anet::Int32)y;
             clientSock.send(posBuffer, addr);
 
             accTime = 0;
-            std::cout << "Sent Position!\n";
+            //std::cout << "Sent Position!\n";
+
+            anet::NetBuffer msgBuffer;
+            anet::NetAddress serverAddr;
+            int bytesRecv = clientSock.receive(msgBuffer, serverAddr);
+
+            if (bytesRecv > 0)
+            {
+                anet::UInt16 protocolID;
+                msgBuffer >> protocolID;
+                if (protocolID == 50322)
+                {
+                    anet::UInt8 messageID;
+                    msgBuffer >> messageID;
+
+                    switch (messageID)
+                    {
+                    case 1: // Disconnection
+                        std::cout << "Disconnected from server.";
+                        running = false;
+                        break;
+                    case 2: // Client listing.
+                    {
+                        unsigned int hash;
+                        int x, y, room;
+
+                        msgBuffer >> hash >> x >> y >> room;
+
+                        std::cout << "New client found! [" << hash << ", (" << x << ", " << y << "), " << room << "]\n";
+
+                        GameClient newClient;
+                        newClient.x = x;
+                        newClient.y = y;
+                        newClient.roomid = room;
+
+                        clients.insert(std::pair<int, GameClient>(hash, newClient));
+
+                        break;
+                    }
+                    case 3: // Position
+                    {
+                        unsigned int hash;
+                        int x, y;
+
+                        msgBuffer >> hash >> x >> y;
+
+                        clients[hash].x = x;
+                        clients[hash].y = y;
+
+                        break;
+                    }
+                    }
+                }
+            }
         }
     }
 }

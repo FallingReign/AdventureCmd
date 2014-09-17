@@ -16,6 +16,8 @@ namespace anet
         NetBuffer();
 
         // Write
+        NetBuffer& operator<<(bool inData);
+
         NetBuffer& operator<<(UInt8 inData);
         NetBuffer& operator<<(Int8 inData);
 
@@ -32,20 +34,22 @@ namespace anet
         NetBuffer& operator<<(Float64 inData);
 
         // Read
-        NetBuffer& operator>>(UInt8& inData);
-        NetBuffer& operator>>(Int8& inData);
+        NetBuffer& operator>>(bool& outData);
 
-        NetBuffer& operator>>(UInt16& inData);
-        NetBuffer& operator>>(Int16& inData);
+        NetBuffer& operator>>(UInt8& outData);
+        NetBuffer& operator>>(Int8& outData);
 
-        NetBuffer& operator>>(UInt32& inData);
-        NetBuffer& operator>>(Int32& inData);
+        NetBuffer& operator>>(UInt16& outData);
+        NetBuffer& operator>>(Int16& outData);
 
-        NetBuffer& operator>>(UInt64& inData);
-        NetBuffer& operator>>(Int64& inData);
+        NetBuffer& operator>>(UInt32& outData);
+        NetBuffer& operator>>(Int32& outData);
 
-        NetBuffer& operator>>(Float32& inData);
-        NetBuffer& operator>>(Float64& inData);
+        NetBuffer& operator>>(UInt64& outData);
+        NetBuffer& operator>>(Int64& outData);
+
+        NetBuffer& operator>>(Float32& outData);
+        NetBuffer& operator>>(Float64& outData);
 
         UInt32 getSize() const;
         const std::vector<UInt8>& getBuffer() const;
