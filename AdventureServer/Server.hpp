@@ -11,6 +11,14 @@
 
 #include "GameClient.hpp"
 
+enum class MessageType
+    : anet::UInt8
+{
+    Connection,
+    Position,
+    Room
+};
+
 class Server
 {
 public:

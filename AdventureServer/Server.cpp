@@ -34,7 +34,9 @@ unsigned int Server::AddClient(const anet::NetAddress& addr)
 
     unsigned int hash = ClientHashFunc(addr);
     std::cout << "Hash: " << hash << "\n";
-    m_clients.insert(std::pair<unsigned int, GameClient>(hash, client));
+    
+    if (m_clients.insert(std::pair<unsigned int, GameClient>(hash, client)).second == false)
+        return -1;
 
     return hash;
 }
@@ -90,30 +92,61 @@ void Server::RunThread()
                 anet::UInt8 messageID;
                 buffer >> messageID;
 
-                // Action determined by the returned ID.
-                switch (messageID)
+                MessageType type = static_cast<MessageType>(messageID);
+
+                // Reset the timeout of the client that sent the message (if possible).
+                auto c = m_clients.find(clientHash);
+                if (c != m_clients.end())
                 {
-                case 0: // New login
-                    std::cout << "New Client joined! (" << addr.getIP() << ":" << addr.getPort() << ")\n";
-                    AddClient(addr);
+                    c->second.m_timeout = 0;
+                }
+                else if (c == m_clients.end() && type != MessageType::Connection) // Unknown with protocol ID. Refuse connection
+                {
+                    continue;
+                }
+
+                // Action determined by the returned ID.
+                switch (type)
+                {
+                case MessageType::Connection: // New login
+                {
+                    unsigned int hash = AddClient(addr);
+                    if (hash != -1)
+                        std::cout << "New Client (" << hash << ") joined! (" << addr.getIP() << ":" << addr.getPort() << ")\n";
+                    else
+                        std::cout << "Duplicate client. Connection refused.\n";
+
+                    // Forward new arrival to other clients.
+
+                    // Forward the client listing to the new client.
+
                     break;
-                case 1: // Position Reporting
+                }
+                case MessageType::Position: // Position Reporting
                 {
                     anet::Int32 x, y;
                     buffer >> x >> y;
-                    std::cout << "Client (" << clientHash << ") moved to: (" << x << ", " << y << ")\n";
+                    //std::cout << "Client (" << clientHash << ") moved to: (" << x << ", " << y << ")\n";
+                    m_clients[clientHash].x = x;
+                    m_clients[clientHash].y = y;
+
+                    // Forward to other clients.
+
                     break;
                 }
-                }
+                case MessageType::Room: // Room changed
+                {
+                    // Get the new room id.
+                    anet::Int32 roomid;
+                    buffer >> roomid;
 
-                // Reset the timeout of the client that sent the message (if possible).
-                try
-                {
-                    auto& client = m_clients.at(clientHash);
-                    client.m_timeout = 0;
+                    m_clients[clientHash].roomid = roomid;
+
+                    // Forward to other clients.
+
+
+                    break;
                 }
-                catch (std::out_of_range ex)
-                {
                 }
             }
             else
