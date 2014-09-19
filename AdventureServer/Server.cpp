@@ -243,10 +243,16 @@ void Server::RunThread()
             {
                 // Send out the disconnect packet just incase the client is lagging.
                 anet::NetBuffer disconBuffer;
-                disconBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Disconnection;
+                disconBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Disconnection << (anet::UInt8)0;
                 m_socket.send(disconBuffer, (*it).second.m_address);
                 
                 std::cout << "Client (" << (*it).first << ") Timed out.\n";
+
+                // Broadcast disconnection to others.
+                anet::NetBuffer forwardDisconBuffer;
+                forwardDisconBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Disconnection << (anet::UInt8)1 << (*it).first;
+                ForwardToClients(forwardDisconBuffer, (*it).first);
+
                 // Remove the client from the map.
                 it = m_clients.erase(it);
                 continue;
@@ -258,7 +264,7 @@ void Server::RunThread()
 
     // Server stopped. Send disconnect messages.
     anet::NetBuffer disconBuffer;
-    disconBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Disconnection;
+    disconBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Disconnection << (anet::UInt8)0;
     ForwardToClients(disconBuffer);
 
     std::cout << "Server stopped.\n";

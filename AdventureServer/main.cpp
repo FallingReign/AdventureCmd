@@ -32,13 +32,13 @@ void runServer()
 
 void runClient()
 {
-    std::unordered_map<int, GameClient> clients;
+    std::unordered_map<unsigned int, GameClient> clients;
     anet::UdpSocket clientSock;
 
     // Bind to any available port.
     clientSock.bind(0);
 
-    anet::NetAddress addr("127.0.0.1", 32002);
+    anet::NetAddress addr("10.0.0.6", 32002);
     anet::NetBuffer buffer;
     buffer << (anet::UInt16)50322 << (anet::UInt8)0;
     clientSock.send(buffer, addr);
@@ -97,8 +97,27 @@ void runClient()
                     switch (messageID)
                     {
                     case 1: // Disconnection
-                        std::cout << "Disconnected from server.";
-                        running = false;
+                    {
+                        anet::UInt8 dcCode;
+                        msgBuffer >> dcCode;
+                        if (dcCode == 1) // A different client disconnected.
+                        {
+                            anet::UInt32 hash;
+                            msgBuffer >> hash;
+
+                            auto it = clients.find(hash);
+                            if (it != clients.end())
+                            {
+                                std::cout << "Client (" << hash << ") disconnected.\n";
+                                clients.erase(it);
+                            }
+                        }
+                        else
+                        {
+                            std::cout << "Disconnected from server.";
+                            running = false;
+                        }
+                    }
                         break;
                     case 2: // Client listing.
                     {
@@ -114,7 +133,7 @@ void runClient()
                         newClient.y = y;
                         newClient.roomid = room;
 
-                        clients.insert(std::pair<int, GameClient>(hash, newClient));
+                        clients.insert(std::pair<unsigned int, GameClient>(hash, newClient));
 
                         break;
                     }
