@@ -38,7 +38,7 @@ void runClient()
     // Bind to any available port.
     clientSock.bind(0);
 
-    anet::NetAddress addr("10.0.0.6", 32002);
+    anet::NetAddress addr("10.151.172.190", 33309);
     anet::NetBuffer buffer;
     buffer << (anet::UInt16)50322 << (anet::UInt8)0;
     clientSock.send(buffer, addr);
@@ -62,6 +62,7 @@ void runClient()
 
     Timer clientTimer;
     unsigned int accTime = 0;
+	unsigned int updateTime = 0;
     anet::Int32 x = 0, y = 0;
 
     clientSock.setBlocking(false);
@@ -74,9 +75,15 @@ void runClient()
             x += 1;
             y += 2;
 
-            anet::NetBuffer posBuffer;
-            posBuffer << (anet::UInt16)50322 << (anet::UInt8)3 << (anet::Int32)x << (anet::Int32)y;
-            clientSock.send(posBuffer, addr);
+			updateTime += accTime;
+
+			if (updateTime >= 100)
+			{
+				anet::NetBuffer posBuffer;
+				posBuffer << (anet::UInt16)50322 << (anet::UInt8)3 << (anet::Int32)x << (anet::Int32)y;
+				clientSock.send(posBuffer, addr);
+				updateTime = 0;
+			}
 
             accTime = 0;
             //std::cout << "Sent Position!\n";

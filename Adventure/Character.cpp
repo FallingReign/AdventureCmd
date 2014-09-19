@@ -48,6 +48,9 @@ bool Character::Move(char d)
 			break;
 	}
 
+	// IF u, d, l, r
+	// TODO: Add position packet
+
 	//check if moving to next zone
 	bool newMap = 0; // assume not new world
 	COORD tmp = world.zone;

@@ -1,19 +1,13 @@
-﻿Build started 9/17/2014 10:47:33 PM.
-     1>Project "J:\CodeBase\projects\Adventure\AdventureNet\AdventureNet.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt NetAddress.cpp NetBuffer.cpp NetSocket.cpp UdpSocket.cpp
-         NetAddress.cpp
-         NetBuffer.cpp
-         NetSocket.cpp
-         UdpSocket.cpp
-       Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"J:\CodeBase\projects\Adventure\AdventureNet\\lib\AdventureNet.lib" /NOLOGO /LTCG Release\NetAddress.obj
+﻿Build started 18/09/2014 3:44:27 PM.
+     1>Project "\\student-home-f.its.deakin.edu.au\ajkent\UserData\Desktop\Adventure\AdventureNet\AdventureNet.vcxproj" on node 2 (Build target(s)).
+     1>Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"\\student-home-f.its.deakin.edu.au\ajkent\UserData\Desktop\Adventure\AdventureNet\\lib\AdventureNet.lib" ws2_32.lib /NOLOGO /LTCG Release\NetAddress.obj
          Release\NetBuffer.obj
          Release\NetSocket.obj
          Release\UdpSocket.obj
-         AdventureNet.vcxproj -> J:\CodeBase\projects\Adventure\AdventureNet\\lib\AdventureNet.lib
-     1>Done Building Project "J:\CodeBase\projects\Adventure\AdventureNet\AdventureNet.vcxproj" (Build target(s)).
+         AdventureNet.vcxproj -> \\student-home-f.its.deakin.edu.au\ajkent\UserData\Desktop\Adventure\AdventureNet\\lib\AdventureNet.lib
+     1>Done Building Project "\\student-home-f.its.deakin.edu.au\ajkent\UserData\Desktop\Adventure\AdventureNet\AdventureNet.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.41
+Time Elapsed 00:00:00.98

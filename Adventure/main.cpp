@@ -5,6 +5,11 @@
 #include "Interface.h"
 #include "Objects.h"
 
+// Network Includes
+#include <UdpSocket.hpp>
+#include <NetBuffer.hpp>
+#include <NetAddress.hpp>
+
 // Create an array of vectors which point to objects[map][Y][X]
 vector<Character*> monsters[2][4][6];
 vector<Item*> loot[3][4][6];
@@ -154,8 +159,27 @@ string shopMenu[shopSize] = {
 	" LEAVE SHOP"
 };
 
+
+// Network globals
+anet::UdpSocket clientSock;
+anet::NetAddress serverAddress("10.151.172.177", 33309);
+static const anet::UInt16 PROTOCOL_ID = 50322;
+
+enum class MessageType
+	: anet::UInt8
+{
+	Connection,
+	Disconnection,
+	ClientListing,
+	Position,
+	Room
+};
+
 int main()
 {
+	//clientSock.send()
+	WSAData data;
+	WSAStartup(MAKEWORD(2, 2), &data);
 
 	//temporary location variable used in main
 	COORD tLoc = {25,5};
@@ -701,25 +725,39 @@ int main()
 
 
 	// Main Game Loop
+	int option = 0;
 	while (!gameover) 
 	{
-
 		if (showmenu)
 		{
 			// display the title menu
 			title.load('t', tmp);
 			menu.display(player);
-			bool option = 0;
 			bool displayHelp = 0;
 
 			// Start Main Menu Loop
 			do
 			{
 				if ((GetAsyncKeyState(0x31) || GetAsyncKeyState(VK_NUMPAD1)) || (GetAsyncKeyState(VK_ESCAPE) & 0x8000))			// Key 1 detection (Play Game)
+				{
 					option = 1;
+				}
 				else if (GetAsyncKeyState(0x32) || GetAsyncKeyState(VK_NUMPAD3))	// Key 2 detection (Multiplayer)
 				{
+					if (clientSock.bind(0) == false)
+					{
+						option = 0;
+						std::cout << WSAGetLastError();
+					}
+
+					anet::NetBuffer connBuffer;
+					connBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Connection;
+					clientSock.send(connBuffer, serverAddress);
+
+					clientSock.setBlocking(false);
+
 					// add multiplayer code
+					option = 2;
 				}
 				else if (GetAsyncKeyState(0x33) || GetAsyncKeyState(VK_NUMPAD2))	// Key 3 detection (Instructions)
 				{
@@ -741,7 +779,7 @@ int main()
 					option = 1;
 				}
 				Sleep(100);
-			} while (!option);
+			} while (option == 0);
 			showmenu = 0;
 
 			//close the menu & load the new world, objects and characters
@@ -765,18 +803,42 @@ int main()
 			showmenu = 1;
 			while (GetAsyncKeyState(VK_ESCAPE) & 0x8000); // wait for key up
 		}
+
+		bool hasMoved = false;
 		if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))		// W & UP Detection
+		{
 			if (player.Move('u')) //returns true when character changes map
 				loadObjects(newWorld, console);
+
+			hasMoved = true;
+		}
 		if (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53))	// S & DOWN Detection
+		{
 			if (player.Move('d')) //returns true when character changes map
 				loadObjects(newWorld, console);
+			hasMoved = true;
+		}
 		if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))	// A & LEFT Detection
+		{
 			if (player.Move('l')) //returns true when character changes map
 				loadObjects(newWorld, console);
+			hasMoved = true;
+		}
 		if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44))	// D & RIGHT Detection
+		{
 			if (player.Move('r')) //returns true when character changes map
 				loadObjects(newWorld, console);
+			hasMoved = true;
+		}
+
+		// Send 
+		if (hasMoved && option == 2)
+		{
+			anet::NetBuffer posBuffer;
+			posBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Position << player.loc.X << player.loc.Y;
+			clientSock.send(posBuffer, serverAddress);
+		}
+		
 		if (GetAsyncKeyState(0x45) & 0x8000)					// E detection for Action button
 		{
 			actionKeyPress(newWorld, console, player, inventory, shop);
@@ -993,6 +1055,9 @@ int main()
 		{
 			delete inventory.items[i];
 		}
+
+	clientSock.unBind();
+	WSACleanup();
 	return 0;
 }
 
@@ -1006,9 +1071,12 @@ void loadObjects(Map nw, Window console)
 
 	// set each zone to their own defualt BG colour (if false then functions use map default)
 	
-	int colourZone[2][4][6];
+	static int colourZone[2][4][6] = { { {0} } };
+
 	colourZone[0][0][3] = White | Black << BG;
 	colourZone[0][1][0] = White | Black << BG;
+
+	//colourZone[0][1][1] = White | Green << BG;
 
 	// load each monster into the map
 	for ( unsigned int i = 0; i < monsters[nw.world][nw.zone.Y][nw.zone.X].size(); ++i)

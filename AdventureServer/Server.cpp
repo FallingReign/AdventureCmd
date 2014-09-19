@@ -115,13 +115,14 @@ void Server::HandleConnection(const anet::NetAddress& addr)
     }
 }
 
-void Server::HandlePosition(unsigned int clientHash, int x, int y)
+void Server::HandlePosition(unsigned int clientHash, short x, short y)
 {
     //std::cout << "Handling position: " << x << ", " << y << "\n";
 
     // Update local information.
-    m_clients[clientHash].x = x;
-    m_clients[clientHash].y = y;
+	auto& c = m_clients[clientHash];
+	c.x = x;
+    c.y = y;
 
     // Forward to other clients.
     anet::NetBuffer posBuffer;
@@ -142,7 +143,8 @@ void Server::HandleRoomChange(unsigned int clientHash, int roomid)
 
 void Server::RunThread()
 {
-    if (m_socket.bind(32002))
+	//32002
+    if (m_socket.bind(33309))
         std::cout << "Server Started!" << std::endl;
     else
     {
@@ -164,6 +166,7 @@ void Server::RunThread()
         int bytesRecv = m_socket.receive(buffer, addr);
         if (bytesRecv > 0)
         {
+			std::cout << "Recv: " << bytesRecv << "\n";
             // Get the protocol ID.
             anet::UInt16 protID;
             buffer >> protID;
@@ -200,9 +203,10 @@ void Server::RunThread()
                 }
                 case MessageType::Position: // Position Reporting
                 {
-                    anet::Int32 x, y;
+                    anet::Int16 x, y;
                     buffer >> x >> y;
                     HandlePosition(clientHash, x, y);
+					std::cout << "Got position: " << x << ", " << y << "\n";
                     break;
                 }
                 case MessageType::Room: // Room changed
