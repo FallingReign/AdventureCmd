@@ -155,14 +155,14 @@ const int shopSize = 4;
 string shopMenu[shopSize] = {
 	" 10 Gold   HP Potion     100% HP when not wounded    ",
 	" 6 Gold    Chapati       50% HP when not wounded     ",
-	" 10 Gold   Life Potion   100% HP when you're wounded ",
+	" 20 Gold   Life Potion   100% HP when you're wounded ",
 	" LEAVE SHOP"
 };
 
 
 // Network globals
 anet::UdpSocket clientSock;
-anet::NetAddress serverAddress("10.151.172.177", 33309);
+anet::NetAddress serverAddress("127.0.0.1", 33309);
 static const anet::UInt16 PROTOCOL_ID = 50322;
 
 enum class MessageType
@@ -725,7 +725,7 @@ int main()
 
 
 	// Main Game Loop
-	int option = 0;
+	bool multiplayer = false;
 	while (!gameover) 
 	{
 		if (showmenu)
@@ -734,6 +734,8 @@ int main()
 			title.load('t', tmp);
 			menu.display(player);
 			bool displayHelp = 0;
+
+			bool option = 0;
 
 			// Start Main Menu Loop
 			do
@@ -757,7 +759,8 @@ int main()
 					clientSock.setBlocking(false);
 
 					// add multiplayer code
-					option = 2;
+					option = 1;
+					multiplayer = true;
 				}
 				else if (GetAsyncKeyState(0x33) || GetAsyncKeyState(VK_NUMPAD2))	// Key 3 detection (Instructions)
 				{
@@ -779,7 +782,7 @@ int main()
 					option = 1;
 				}
 				Sleep(100);
-			} while (option == 0);
+			} while (!option);
 			showmenu = 0;
 
 			//close the menu & load the new world, objects and characters
@@ -832,7 +835,7 @@ int main()
 		}
 
 		// Send 
-		if (hasMoved && option == 2)
+		if (hasMoved && multiplayer)
 		{
 			anet::NetBuffer posBuffer;
 			posBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Position << player.loc.X << player.loc.Y;
@@ -1395,7 +1398,7 @@ void actionKeyPress(Map nw, Window con, Character& p, Interface& bag, Interface&
 						bag.items.push_back(new Item(iloot.getItemName(), iloot.getItemType(), iloot.getItemQty()));
 					else
 					{
-						bag.message("\n Your inventory is full. \n Drop an item to make room, or find a bigger bag.", "Inventory Full", 1);
+						bag.message("\n Inventory full. No room for " + iloot.getItemName() + " \n Drop an item to make room, or find a bigger bag.", "Inventory Full", 1);
 						// reload the world
 						nw.load(nw.world, nw.zone);
 						loadObjects(nw, con);

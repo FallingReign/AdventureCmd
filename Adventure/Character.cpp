@@ -9,7 +9,7 @@ Character::Character(Window w, Map& newWorld, string name, COORD loc, int hp, in
 	gold = 0;
 	weapon = "Fist";
 	weapondmg = 0;
-	capacity = 5;
+	capacity = 6;
 }
 
 
