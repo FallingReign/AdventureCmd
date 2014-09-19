@@ -725,7 +725,7 @@ int main()
 
 
 	// Main Game Loop
-	int option = 0;
+    bool isMultiplayer = false;
 	while (!gameover) 
 	{
 		if (showmenu)
@@ -736,11 +736,13 @@ int main()
 			bool displayHelp = 0;
 
 			// Start Main Menu Loop
+            int option = 0;
 			do
 			{
 				if ((GetAsyncKeyState(0x31) || GetAsyncKeyState(VK_NUMPAD1)) || (GetAsyncKeyState(VK_ESCAPE) & 0x8000))			// Key 1 detection (Play Game)
 				{
 					option = 1;
+                    isMultiplayer = false;
 				}
 				else if (GetAsyncKeyState(0x32) || GetAsyncKeyState(VK_NUMPAD3))	// Key 2 detection (Multiplayer)
 				{
@@ -758,6 +760,7 @@ int main()
 
 					// add multiplayer code
 					option = 2;
+                    isMultiplayer = true;
 				}
 				else if (GetAsyncKeyState(0x33) || GetAsyncKeyState(VK_NUMPAD2))	// Key 3 detection (Instructions)
 				{
@@ -832,7 +835,7 @@ int main()
 		}
 
 		// Send 
-		if (hasMoved && option == 2)
+		if (hasMoved && isMultiplayer)
 		{
 			anet::NetBuffer posBuffer;
 			posBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Position << player.loc.X << player.loc.Y;
