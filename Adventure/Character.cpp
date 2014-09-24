@@ -166,7 +166,7 @@ bool Character::Move(char d)
 	int bg = (newTile[0].Attributes & Blue << BG ) | (newTile[0].Attributes & Red << BG) | (newTile[0].Attributes & Green << BG) | (newTile[0].Attributes & BACKGROUND_INTENSITY);
 	newTile[0].Char.AsciiChar = 2;
 	if (d == 'c')
-		newTile[0].Attributes = 6 | bg;
+		newTile[0].Attributes = Yellow | bg;
 	else
 		newTile[0].Attributes = White | bg;
 

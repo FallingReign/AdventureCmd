@@ -54,7 +54,7 @@ private:
 
     static const anet::UInt16 PROTOCOL_ID = 50322;
     static const unsigned int MAX_CLIENTS = 2000;
-    static const unsigned int MAX_TIMEOUT = 400;
+    static const unsigned int MAX_TIMEOUT = 800;
 };
 
 #endif

@@ -180,6 +180,13 @@ enum class MessageType
 	Room
 };
 
+void SendHeartbeat(const Character& player)
+{
+    anet::NetBuffer posBuffer;
+    posBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Position << player.loc.X << player.loc.Y;
+    clientSock.send(posBuffer, serverAddress);
+}
+
 int main()
 {
 	//clientSock.send()
@@ -759,11 +766,23 @@ int main()
 					}
 
                     // Ask for a connection.
-					anet::NetBuffer connBuffer;
+					/*anet::NetBuffer connBuffer;
 					connBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Connection;
-					clientSock.send(connBuffer, serverAddress);
+					clientSock.send(connBuffer, serverAddress);*/
 
-					clientSock.setBlocking(false);
+                    // Broadcast connection request.
+                    int useBroadcast = 1;
+                    ::setsockopt(clientSock.getSocketID(), SOL_SOCKET, SO_BROADCAST, (char*)useBroadcast, sizeof(useBroadcast));
+
+                    anet::NetBuffer broadcastBuffer;
+                    broadcastBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Connection;
+                    anet::NetAddress broadcastAddr("255.255.255.255", 33309);
+                    clientSock.send(broadcastBuffer, broadcastAddr);
+
+                    useBroadcast = 0;
+                    ::setsockopt(clientSock.getSocketID(), SOL_SOCKET, SO_BROADCAST, (char*)useBroadcast, sizeof(useBroadcast));
+
+                    clientSock.setBlocking(false);
 
 					// add multiplayer code
 					option = 1;
@@ -866,9 +885,7 @@ int main()
 
 		if ((hasMoved || timeAccumulator >= 10) && multiplayer)
 		{
-			anet::NetBuffer posBuffer;
-			posBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Position << player.loc.X << player.loc.Y;
-			clientSock.send(posBuffer, serverAddress);
+            SendHeartbeat(player);
 
             timeAccumulator = 0;
 		}
@@ -1006,6 +1023,10 @@ int main()
                         {
                             auto& client = c->second;
                             clientList.erase(c);
+
+                            player.world.load(player.world.world, player.world.zone); 
+                            loadObjects(newWorld, console);
+                            player.Move('x');
                         }
                     }
 
@@ -1022,11 +1043,8 @@ int main()
             loadObjects(newWorld, console);
             auto& client = c.second;
 
-            client.Move('x');
+            client.Move('c');
             player.Move('x');
-
-            //console.setCursorPos(client.x, client.y);
-            //std::cout << "T";
         }
 
         ////////////
@@ -1050,6 +1068,8 @@ int main()
 		// Loop while inventory is open
 		while (inventory.isVisible)
 		{
+            SendHeartbeat(player);
+
 			// close the inventoy
 			if ((GetAsyncKeyState(0x42) & 0x8000) || (GetAsyncKeyState(0x49) & 0x8000))
 			{	
@@ -1155,7 +1175,7 @@ int main()
 						ttPos.Y++;
 				}
 				
-				while (GetAsyncKeyState(VK_MENU) & 0x8000); //wait for key up
+                while (GetAsyncKeyState(VK_MENU) & 0x8000) { if(multiplayer) SendHeartbeat(player); } //wait for key up
 				newWorld.load(newWorld.world, newWorld.zone);
 				loadObjects(newWorld, console);
 				inventory.display(player, 1);
