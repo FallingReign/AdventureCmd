@@ -805,7 +805,7 @@ int main()
 		}
 
 		//wait if window not active
-		while (GetForegroundWindow() != hWnd) { Sleep(100);}
+		//while (GetForegroundWindow() != hWnd) { Sleep(100);}
 
 		// Detect each key state 
 		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
@@ -876,6 +876,8 @@ int main()
             anet::NetBuffer changeBuffer;
             changeBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Room << newWorld.world << newWorld.zone.X << newWorld.zone.Y;
             clientSock.send(changeBuffer, serverAddress);
+
+            clientList.clear();
         }
 
         // Recv
@@ -923,9 +925,14 @@ int main()
 
                     recvBuffer >> hash >> x >> y;
 
-                    auto& client = clientList[hash];
-                    client.x = x;
-                    client.y = y;
+                    auto& cit = clientList.find(hash);
+
+                    if (cit != clientList.end())
+                    {
+                        auto& client = cit->second;
+                        client.x = x;
+                        client.y = y;
+                    }
                     break;
                 }
                 case MessageType::Room:
@@ -940,9 +947,9 @@ int main()
                     auto& cit = clientList.find(hash);
                     auto& world = player.world;
 
-                    bool accept = (worldID == world.world) && (zoneX = world.zone.X) && (zoneY == world.zone.Y);
+                    bool accept = (worldID == world.world) && (zoneX == world.zone.X) && (zoneY == world.zone.Y);
 
-                    std::cout << worldID << " " << zoneX << " " << zoneY;
+                    //std::cout << worldID << " " << zoneX << " " << zoneY;
 
                     if (cit != clientList.end())
                     {

@@ -101,7 +101,7 @@ void Server::HandleConnection(const anet::NetAddress& addr)
 
                 // Send the new client data to the existing one.
                 anet::NetBuffer addBuffer;
-                addBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << hash << newClient.x << newClient.y << cl.worldid << cl.zoneX << cl.zoneY;
+                addBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << hash << newClient.x << newClient.y << newClient.worldid << newClient.zoneX << newClient.zoneY;
                 m_socket.send(addBuffer, cl.m_address);
             }
 
@@ -147,6 +147,18 @@ void Server::HandleRoomChange(unsigned int clientHash, int worldID, short zoneX,
     ForwardToClients(roomBuffer, clientHash);
 
     std::cout << "Client (" << clientHash << ") changed zones (" << worldID << ", " << zoneX << ", " << zoneY << ").\n";
+
+    // Send listing of all clients that are in that room.
+    for (auto& c : m_clients)
+    {
+        auto& other = c.second;
+        if (c.first != clientHash && other.worldid == worldID && other.zoneX == zoneX && other.zoneY == zoneY)
+        {
+            anet::NetBuffer listingBuffer;
+            listingBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << c.first << other.x << other.y << other.worldid << other.zoneX << other.zoneY;
+            m_socket.send(listingBuffer, client.m_address);
+        }
+    }
 }
 
 void Server::RunThread()
@@ -251,7 +263,7 @@ void Server::RunThread()
         while (it != m_clients.end())
         {
             // Increment the timeout.
-            //(*it).second.m_timeout += timeElapsed;
+            (*it).second.m_timeout += timeElapsed;
             if ((*it).second.m_timeout >= Server::MAX_TIMEOUT) // Disconnection
             {
                 // Send out the disconnect packet just incase the client is lagging.
