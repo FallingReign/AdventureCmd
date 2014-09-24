@@ -165,7 +165,7 @@ string shopMenu[shopSize] = {
 
 // Network globals
 anet::UdpSocket clientSock;
-anet::NetAddress serverAddress("10.0.0.41", 33309);
+anet::NetAddress serverAddress("127.0.0.1", 33309);
 static const anet::UInt16 PROTOCOL_ID = 50322;
 std::unordered_map<unsigned int, Character> clientList;
 unsigned int timeAccumulator = 0;
@@ -996,7 +996,7 @@ int main()
 			loadObjects(newWorld, console);
             auto& client = c.second;
 
-			client.Move('x');
+			client.Move('c');
 			player.Move('x');
 
             //console.setCursorPos(client.x, client.y);
