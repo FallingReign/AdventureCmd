@@ -16,7 +16,9 @@ protected:
 	Window console;
 
 public:
-	Map& world;
+	Map& world; 
+	short zoneX{ 0 }, zoneY{ 0 };
+	int worldid{ 0 };
 	string name, weapon;
 	int health, mana, attack, defence, maxhealth, map, xp, xpmax, level, gold, weapondmg, capacity;
 	double dex, maxdex;

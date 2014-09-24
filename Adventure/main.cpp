@@ -165,9 +165,9 @@ string shopMenu[shopSize] = {
 
 // Network globals
 anet::UdpSocket clientSock;
-anet::NetAddress serverAddress("10.0.0.6", 33309);
+anet::NetAddress serverAddress("10.0.0.41", 33309);
 static const anet::UInt16 PROTOCOL_ID = 50322;
-std::unordered_map<unsigned int, GameClient> clientList;
+std::unordered_map<unsigned int, Character> clientList;
 unsigned int timeAccumulator = 0;
 
 enum class MessageType
@@ -200,8 +200,8 @@ int main()
 	
 	// Create the player character and set to default position
 	Character player(console, newWorld, "Rodney", tLoc, 5, 1, 2, 5);
-	tLoc.X++;
-	Character ally(console, newWorld, "Ally", tLoc, 5, 1, 2, 5);
+	//tLoc.X++;
+	//Character ally(console, newWorld, "Ally", tLoc, 5, 1, 2, 5);
 
 	// create title menu map/background
 	Map title(console);
@@ -805,55 +805,57 @@ int main()
 		}
 
 		//wait if window not active
-		//while (GetForegroundWindow() != hWnd) { Sleep(100);}
-
-		// Detect each key state 
-		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
-		{
-			showmenu = 1;
-			while (GetAsyncKeyState(VK_ESCAPE) & 0x8000); // wait for key up
-		}
+	   // while (GetForegroundWindow() != hWnd) { Sleep(100);}
 
 		bool hasMoved = false;
-        bool mapChange = false;
-		if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))		// W & UP Detection
+		bool mapChange = false;
+		if (GetForegroundWindow() == hWnd)
 		{
-            if (player.Move('u')) //returns true when character changes map
-            {
-                loadObjects(newWorld, console);
-                mapChange = true;
-            }
+			// Detect each key state 
+			if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+			{
+				showmenu = 1;
+				while (GetAsyncKeyState(VK_ESCAPE) & 0x8000); // wait for key up
+			}
 
-			hasMoved = true;
-		}
-		if (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53))	// S & DOWN Detection
-		{
-			if (player.Move('d')) //returns true when character changes map
-            {
-                loadObjects(newWorld, console);
-                mapChange = true;
-            }
-			hasMoved = true;
-		}
-		if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))	// A & LEFT Detection
-		{
-			if (player.Move('l')) //returns true when character changes map
-            {
-                loadObjects(newWorld, console);
-                mapChange = true;
-            }
-			hasMoved = true;
-		}
-		if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44))	// D & RIGHT Detection
-		{
-			if (player.Move('r')) //returns true when character changes map
-            {
-                loadObjects(newWorld, console);
-                mapChange = true;
-            }
-			hasMoved = true;
-		}
+			if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))		// W & UP Detection
+			{
+				if (player.Move('u')) //returns true when character changes map
+				{
+					loadObjects(newWorld, console);
+					mapChange = true;
+				}
 
+				hasMoved = true;
+			}
+			if (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53))	// S & DOWN Detection
+			{
+				if (player.Move('d')) //returns true when character changes map
+				{
+					loadObjects(newWorld, console);
+					mapChange = true;
+				}
+				hasMoved = true;
+			}
+			if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))	// A & LEFT Detection
+			{
+				if (player.Move('l')) //returns true when character changes map
+				{
+					loadObjects(newWorld, console);
+					mapChange = true;
+				}
+				hasMoved = true;
+			}
+			if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44))	// D & RIGHT Detection
+			{
+				if (player.Move('r')) //returns true when character changes map
+				{
+					loadObjects(newWorld, console);
+					mapChange = true;
+				}
+				hasMoved = true;
+			}
+		}
         // player.world.world = WORLD ID. (INT32)
         // player.world.zone.X = ZONE X (INT16)
         // player.world.zone.Y = ZONE Y (INT16)
@@ -903,19 +905,25 @@ int main()
                     // [HASH] [X] [Y] [ROOM]
                     unsigned int hash;
                     short x, y, zoneX, zoneY;
+					COORD cLoc;
                     int worldID;
 
                     recvBuffer >> hash >> x >> y >> worldID >> zoneX >> zoneY;
-                    GameClient client;
-                    client.x = x;
-                    client.y = y;
+					
+					COORD loc;
+					loc.X = x;
+					loc.Y = y;
+
+                    Character client(console, newWorld, "Client", loc);
+                    //client.x = x;
+                    //client.y = y;
                     client.worldid = worldID;
                     client.zoneX = zoneX;
                     client.zoneY = zoneY;
 
                     // If they exist in our space then add them. Otherwise we just ignore this listing.
                     if (client.worldid == player.world.world && client.zoneX == player.world.zone.X && client.zoneY == player.world.zone.Y)
-                        clientList.insert(std::pair<unsigned int, GameClient>(hash, client));
+                        clientList.insert(std::pair<unsigned int, Character>(hash, client));
                     break;
                 }
                 case MessageType::Position:
@@ -930,8 +938,10 @@ int main()
                     if (cit != clientList.end())
                     {
                         auto& client = cit->second;
-                        client.x = x;
-                        client.y = y;
+						//client.x = x;
+                        //client.y = y;
+						client.loc.X = x;
+						client.loc.Y = y;
                     }
                     break;
                 }
@@ -961,11 +971,16 @@ int main()
                     }
                     else if (accept) // Add to our list if in our location.
                     {
-                        GameClient client;
+
+						COORD loc;
+						loc.X = 0;
+						loc.Y = 0;
+
+						Character client(console, newWorld, "Client", loc);
                         client.worldid = worldID;
                         client.zoneX = zoneX;
                         client.zoneY = zoneY;
-                        clientList.insert(std::pair<unsigned int, GameClient>(hash, client));
+                        clientList.insert(std::pair<unsigned int, Character>(hash, client));
                     }
 
                     break;
@@ -975,13 +990,17 @@ int main()
         }
 
         // Clients
-        loadObjects(newWorld, console);
         for (auto& c : clientList)
         {
+			player.world.load(player.world.world, player.world.zone);
+			loadObjects(newWorld, console);
             auto& client = c.second;
 
-            console.setCursorPos(client.x, client.y);
-            std::cout << "T";
+			client.Move('x');
+			player.Move('x');
+
+            //console.setCursorPos(client.x, client.y);
+            //std::cout << "T";
         }
 
         ////////////
