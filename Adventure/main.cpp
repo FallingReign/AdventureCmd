@@ -752,9 +752,32 @@ int main()
 						std::cout << WSAGetLastError();
 					}
 
+                    // Ask for a connection.
 					anet::NetBuffer connBuffer;
 					connBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Connection;
-					clientSock.send(connBuffer, serverAddress);
+                    anet::NetAddress broadcastAddr("255.255.255.255", 33309);
+					clientSock.send(connBuffer, broadcastAddr);
+
+                    // Wait for a server to respond.
+                    bool validResponse = false;
+
+                    while (!validResponse)
+                    {
+                        anet::NetBuffer ackBuffer;
+                        anet::NetAddress ackAddr;
+                        int bytesRecv = clientSock.receive(ackBuffer, ackAddr);
+
+                        anet::UInt16 protID;
+                        anet::UInt8 mid;
+
+                        ackBuffer >> protID >> mid;
+
+                        if (protID == PROTOCOL_ID && mid == (anet::UInt8)MessageType::Connection)
+                        {
+                            validResponse = true;
+                            serverAddress = ackAddr;
+                        }
+                    }
 
 					clientSock.setBlocking(false);
 

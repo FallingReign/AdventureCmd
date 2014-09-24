@@ -138,7 +138,7 @@ void runClient()
                         GameClient newClient;
                         newClient.x = x;
                         newClient.y = y;
-                        newClient.roomid = room;
+                        //newClient.roomid = room;
 
                         clients.insert(std::pair<unsigned int, GameClient>(hash, newClient));
 
@@ -163,7 +163,7 @@ void runClient()
     }
 }
 
-int main(int argc, char** argv)
+auto main(int argc, char** argv) -> int
 {
     WSAData data;
     WSAStartup(MAKEWORD(2, 2), &data);

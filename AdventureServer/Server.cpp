@@ -2,6 +2,7 @@
 #include "Timer.hpp"
 #include <iostream>
 #include <functional>
+#include <algorithm>
 #include <chrono>
 
 #include <WinSock2.h>
@@ -133,7 +134,7 @@ void Server::HandlePosition(unsigned int clientHash, short x, short y)
 void Server::HandleRoomChange(unsigned int clientHash, int roomid)
 {
     // Update local information.
-    m_clients[clientHash].roomid = roomid;
+    //m_clients[clientHash].roomid = roomid;
 
     // Forward to other clients.
     anet::NetBuffer roomBuffer;
