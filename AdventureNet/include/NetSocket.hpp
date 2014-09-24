@@ -19,10 +19,11 @@ namespace anet
 
         void setBlocking(bool block = true);
 
+        UInt32 getSocketID() const;
+
     protected:
         void init();
         void uninit();
-        UInt32 getSocketID() const;
 
     private:
         Type m_type;

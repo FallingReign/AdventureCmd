@@ -47,6 +47,10 @@ std::string NetAddress::getIP() const
 
 UInt32 NetAddress::resolve(const std::string& inAddress)
 {
+    // Return broadcast if specified.
+    if (inAddress == "255.255.255.255")
+        return htonl(INADDR_BROADCAST);
+
     // First try to do it without a resolve.
     UInt32 addr = inet_addr(inAddress.c_str());
     

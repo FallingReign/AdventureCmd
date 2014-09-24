@@ -93,6 +93,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Objects.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Trigger.cpp" />
     <ClCompile Include="Waypoint.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -100,10 +101,12 @@
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="GameClient.hpp" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Objects.h" />
+    <ClInclude Include="Timer.hpp" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

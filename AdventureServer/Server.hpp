@@ -36,7 +36,7 @@ private:
     
     void HandleConnection(const anet::NetAddress& addr);
     void HandlePosition(unsigned int clientHash, short x, short y);
-    void HandleRoomChange(unsigned int clientHash, int roomid);
+    void HandleRoomChange(unsigned int clientHash, int worldID, short zoneX, short zoneY);
     
     void RunThread();
 

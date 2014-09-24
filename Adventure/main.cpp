@@ -9,6 +9,9 @@
 #include <UdpSocket.hpp>
 #include <NetBuffer.hpp>
 #include <NetAddress.hpp>
+#include "GameClient.hpp"
+#include "Timer.hpp"
+#include <unordered_map>
 
 // Create an array of vectors which point to objects[map][Y][X]
 vector<Character*> monsters[2][4][6];
@@ -162,8 +165,10 @@ string shopMenu[shopSize] = {
 
 // Network globals
 anet::UdpSocket clientSock;
-anet::NetAddress serverAddress("127.0.0.1", 33309);
+anet::NetAddress serverAddress("10.0.0.6", 33309);
 static const anet::UInt16 PROTOCOL_ID = 50322;
+std::unordered_map<unsigned int, GameClient> clientList;
+unsigned int timeAccumulator = 0;
 
 enum class MessageType
 	: anet::UInt8
@@ -726,6 +731,7 @@ int main()
 
 	// Main Game Loop
 	bool multiplayer = false;
+    Timer timer;
 	while (!gameover) 
 	{
 		if (showmenu)
@@ -755,29 +761,7 @@ int main()
                     // Ask for a connection.
 					anet::NetBuffer connBuffer;
 					connBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Connection;
-                    anet::NetAddress broadcastAddr("255.255.255.255", 33309);
-					clientSock.send(connBuffer, broadcastAddr);
-
-                    // Wait for a server to respond.
-                    bool validResponse = false;
-
-                    while (!validResponse)
-                    {
-                        anet::NetBuffer ackBuffer;
-                        anet::NetAddress ackAddr;
-                        int bytesRecv = clientSock.receive(ackBuffer, ackAddr);
-
-                        anet::UInt16 protID;
-                        anet::UInt8 mid;
-
-                        ackBuffer >> protID >> mid;
-
-                        if (protID == PROTOCOL_ID && mid == (anet::UInt8)MessageType::Connection)
-                        {
-                            validResponse = true;
-                            serverAddress = ackAddr;
-                        }
-                    }
+					clientSock.send(connBuffer, serverAddress);
 
 					clientSock.setBlocking(false);
 
@@ -831,39 +815,169 @@ int main()
 		}
 
 		bool hasMoved = false;
+        bool mapChange = false;
 		if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))		// W & UP Detection
 		{
-			if (player.Move('u')) //returns true when character changes map
-				loadObjects(newWorld, console);
+            if (player.Move('u')) //returns true when character changes map
+            {
+                loadObjects(newWorld, console);
+                mapChange = true;
+            }
 
 			hasMoved = true;
 		}
 		if (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53))	// S & DOWN Detection
 		{
 			if (player.Move('d')) //returns true when character changes map
-				loadObjects(newWorld, console);
+            {
+                loadObjects(newWorld, console);
+                mapChange = true;
+            }
 			hasMoved = true;
 		}
 		if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))	// A & LEFT Detection
 		{
 			if (player.Move('l')) //returns true when character changes map
-				loadObjects(newWorld, console);
+            {
+                loadObjects(newWorld, console);
+                mapChange = true;
+            }
 			hasMoved = true;
 		}
 		if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44))	// D & RIGHT Detection
 		{
 			if (player.Move('r')) //returns true when character changes map
-				loadObjects(newWorld, console);
+            {
+                loadObjects(newWorld, console);
+                mapChange = true;
+            }
 			hasMoved = true;
 		}
 
+        // player.world.world = WORLD ID. (INT32)
+        // player.world.zone.X = ZONE X (INT16)
+        // player.world.zone.Y = ZONE Y (INT16)
+        // player.loc = PLAYER LOCATION. (INT16)
+
 		// Send 
-		if (hasMoved && multiplayer)
+        timeAccumulator += timer.Restart();
+
+		if ((hasMoved || timeAccumulator >= 10) && multiplayer)
 		{
 			anet::NetBuffer posBuffer;
 			posBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Position << player.loc.X << player.loc.Y;
 			clientSock.send(posBuffer, serverAddress);
+
+            timeAccumulator = 0;
 		}
+
+        if (mapChange)
+        {
+            anet::NetBuffer changeBuffer;
+            changeBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Room << newWorld.world << newWorld.zone.X << newWorld.zone.Y;
+            clientSock.send(changeBuffer, serverAddress);
+        }
+
+        // Recv
+        anet::NetBuffer recvBuffer;
+        anet::NetAddress recvAddr;
+        int bytesRecv = clientSock.receive(recvBuffer, recvAddr);
+
+        if (bytesRecv > 0 && recvAddr == serverAddress)
+        {
+            anet::UInt16 protID;
+            recvBuffer >> protID;
+
+            if (protID == PROTOCOL_ID)
+            {
+                anet::UInt8 mid;
+                recvBuffer >> mid;
+                MessageType type = static_cast<MessageType>(mid);
+
+                switch (type)
+                {
+                case MessageType::ClientListing: // Gotta add a new client to our own list.
+                {
+                    // [HASH] [X] [Y] [ROOM]
+                    unsigned int hash;
+                    short x, y, zoneX, zoneY;
+                    int worldID;
+
+                    recvBuffer >> hash >> x >> y >> worldID >> zoneX >> zoneY;
+                    GameClient client;
+                    client.x = x;
+                    client.y = y;
+                    client.worldid = worldID;
+                    client.zoneX = zoneX;
+                    client.zoneY = zoneY;
+
+                    // If they exist in our space then add them. Otherwise we just ignore this listing.
+                    if (client.worldid == player.world.world && client.zoneX == player.world.zone.X && client.zoneY == player.world.zone.Y)
+                        clientList.insert(std::pair<unsigned int, GameClient>(hash, client));
+                    break;
+                }
+                case MessageType::Position:
+                {
+                    unsigned int hash;
+                    short x, y;
+
+                    recvBuffer >> hash >> x >> y;
+
+                    auto& client = clientList[hash];
+                    client.x = x;
+                    client.y = y;
+                    break;
+                }
+                case MessageType::Room:
+                {
+                    // Someone changed rooms. If they are not in ours then get rid of them else add them or ignore.
+                    anet::UInt32 hash;
+                    anet::Int32 worldID;
+                    anet::Int16 zoneX, zoneY;
+                    
+                    recvBuffer >> hash >> worldID >> zoneX >> zoneY;
+
+                    auto& cit = clientList.find(hash);
+                    auto& world = player.world;
+
+                    bool accept = (worldID == world.world) && (zoneX = world.zone.X) && (zoneY == world.zone.Y);
+
+                    std::cout << worldID << " " << zoneX << " " << zoneY;
+
+                    if (cit != clientList.end())
+                    {
+                        // Exists. Compare. Remove if no longer in same location.
+                        if (!accept)
+                        {
+                            clientList.erase(cit);
+                        }
+                    }
+                    else if (accept) // Add to our list if in our location.
+                    {
+                        GameClient client;
+                        client.worldid = worldID;
+                        client.zoneX = zoneX;
+                        client.zoneY = zoneY;
+                        clientList.insert(std::pair<unsigned int, GameClient>(hash, client));
+                    }
+
+                    break;
+                }
+                }
+            }
+        }
+
+        // Clients
+        loadObjects(newWorld, console);
+        for (auto& c : clientList)
+        {
+            auto& client = c.second;
+
+            console.setCursorPos(client.x, client.y);
+            std::cout << "T";
+        }
+
+        ////////////
 		
 		if (GetAsyncKeyState(0x45) & 0x8000)					// E detection for Action button
 		{

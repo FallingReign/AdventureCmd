@@ -96,12 +96,12 @@ void Server::HandleConnection(const anet::NetAddress& addr)
             {
                 // Send the client data to the new client.
                 anet::NetBuffer listingBuffer;
-                listingBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << (*c).first << cl.x << cl.y << cl.roomid;
+                listingBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << (*c).first << cl.x << cl.y << cl.worldid << cl.zoneX << cl.zoneY;
                 m_socket.send(listingBuffer, addr);
 
                 // Send the new client data to the existing one.
                 anet::NetBuffer addBuffer;
-                addBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << hash << newClient.x << newClient.y << newClient.roomid;
+                addBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::ClientListing << hash << newClient.x << newClient.y << cl.worldid << cl.zoneX << cl.zoneY;
                 m_socket.send(addBuffer, cl.m_address);
             }
 
@@ -112,6 +112,7 @@ void Server::HandleConnection(const anet::NetAddress& addr)
     else // Connection refused.
     {
         connBuffer << false;
+        m_socket.send(connBuffer, addr);
         std::cout << "Duplicate client. Connection refused.\n";
     }
 }
@@ -131,15 +132,21 @@ void Server::HandlePosition(unsigned int clientHash, short x, short y)
     ForwardToClients(posBuffer, clientHash);
 }
 
-void Server::HandleRoomChange(unsigned int clientHash, int roomid)
+void Server::HandleRoomChange(unsigned int clientHash, int worldID, short zoneX, short zoneY)
 {
     // Update local information.
-    //m_clients[clientHash].roomid = roomid;
+    auto& client = m_clients[clientHash];
+    client.worldid = worldID;
+    client.zoneX = zoneX;
+    client.zoneY = zoneY;
 
     // Forward to other clients.
     anet::NetBuffer roomBuffer;
-    roomBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Room << clientHash << roomid;
+    roomBuffer << Server::PROTOCOL_ID << (anet::UInt8)MessageType::Room << clientHash << worldID << zoneX << zoneY;
+
     ForwardToClients(roomBuffer, clientHash);
+
+    std::cout << "Client (" << clientHash << ") changed zones (" << worldID << ", " << zoneX << ", " << zoneY << ").\n";
 }
 
 void Server::RunThread()
@@ -167,7 +174,7 @@ void Server::RunThread()
         int bytesRecv = m_socket.receive(buffer, addr);
         if (bytesRecv > 0)
         {
-			std::cout << "Recv: " << bytesRecv << "\n";
+			//std::cout << "Recv: " << bytesRecv << "\n";
             // Get the protocol ID.
             anet::UInt16 protID;
             buffer >> protID;
@@ -175,7 +182,7 @@ void Server::RunThread()
             if (protID == Server::PROTOCOL_ID)
             {
                 // Who sent this packet? Find out.
-                int clientHash = ClientHashFunc(addr);
+                unsigned int clientHash = ClientHashFunc(addr);
 
                 // Get what message was sent.
                 anet::UInt8 messageID;
@@ -207,15 +214,16 @@ void Server::RunThread()
                     anet::Int16 x, y;
                     buffer >> x >> y;
                     HandlePosition(clientHash, x, y);
-					std::cout << "Got position: " << x << ", " << y << "\n";
+					//std::cout << "Got position: " << x << ", " << y << "\n";
                     break;
                 }
                 case MessageType::Room: // Room changed
                 {
-                    // Get the new room id.
-                    anet::Int32 roomid;
-                    buffer >> roomid;
-                    HandleRoomChange(clientHash, roomid);
+                    // Get the new zone and world coords.
+                    anet::Int32 worldID;
+                    anet::Int16 zoneX, zoneY;
+                    buffer >> worldID >> zoneX >> zoneY;
+                    HandleRoomChange(clientHash, worldID, zoneX, zoneY);
                     break;
                 }
                 }
@@ -243,7 +251,7 @@ void Server::RunThread()
         while (it != m_clients.end())
         {
             // Increment the timeout.
-            (*it).second.m_timeout += timeElapsed;
+            //(*it).second.m_timeout += timeElapsed;
             if ((*it).second.m_timeout >= Server::MAX_TIMEOUT) // Disconnection
             {
                 // Send out the disconnect packet just incase the client is lagging.
