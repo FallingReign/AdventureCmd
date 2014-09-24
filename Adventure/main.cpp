@@ -165,7 +165,7 @@ string shopMenu[shopSize] = {
 
 // Network globals
 anet::UdpSocket clientSock;
-anet::NetAddress serverAddress("10.0.0.41", 33309);
+anet::NetAddress serverAddress("127.0.0.1", 33309);
 static const anet::UInt16 PROTOCOL_ID = 50322;
 std::unordered_map<unsigned int, Character> clientList;
 unsigned int timeAccumulator = 0;
@@ -985,6 +985,32 @@ int main()
 
                     break;
                 }
+                case MessageType::Disconnection:
+                {
+                    anet::UInt8 code;
+                    recvBuffer >> code;
+
+                    if (code == 0) // We were disconnected.
+                    {
+                        multiplayer = false;
+                        showmenu = true;
+                    }
+                    else if (code == 1) // Someone else disconnected.
+                    {
+                        unsigned int hash;
+                        recvBuffer >> hash;
+
+                        auto& c = clientList.find(hash);
+
+                        if (c != clientList.end())
+                        {
+                            auto& client = c->second;
+                            clientList.erase(c);
+                        }
+                    }
+
+                    break;
+                }
                 }
             }
         }
@@ -992,12 +1018,12 @@ int main()
         // Clients
         for (auto& c : clientList)
         {
-			player.world.load(player.world.world, player.world.zone);
-			loadObjects(newWorld, console);
+            player.world.load(player.world.world, player.world.zone);
+            loadObjects(newWorld, console);
             auto& client = c.second;
 
-			client.Move('x');
-			player.Move('x');
+            client.Move('x');
+            player.Move('x');
 
             //console.setCursorPos(client.x, client.y);
             //std::cout << "T";
