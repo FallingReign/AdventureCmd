@@ -193,6 +193,13 @@ int main()
 	WSAData data;
 	WSAStartup(MAKEWORD(2, 2), &data);
 
+    // IP file.
+    std::ifstream ipFile("ip.txt");
+    std::string ipstr;
+    ipFile >> ipstr;
+    anet::NetAddress ipaddr(ipstr, 33309);
+    serverAddress = ipaddr;
+
 	//temporary location variable used in main
 	COORD tLoc = {25,5};
 
@@ -766,12 +773,12 @@ int main()
 					}
 
                     // Ask for a connection.
-					/*anet::NetBuffer connBuffer;
+					anet::NetBuffer connBuffer;
 					connBuffer << PROTOCOL_ID << (anet::UInt8)MessageType::Connection;
-					clientSock.send(connBuffer, serverAddress);*/
+					clientSock.send(connBuffer, serverAddress);
 
-                    // Broadcast connection request.
-                    int useBroadcast = 1;
+                    // Broadcast connection request. Auto-discovery
+                    /*int useBroadcast = 1;
                     ::setsockopt(clientSock.getSocketID(), SOL_SOCKET, SO_BROADCAST, (char*)useBroadcast, sizeof(useBroadcast));
 
                     anet::NetBuffer broadcastBuffer;
@@ -781,6 +788,7 @@ int main()
 
                     useBroadcast = 0;
                     ::setsockopt(clientSock.getSocketID(), SOL_SOCKET, SO_BROADCAST, (char*)useBroadcast, sizeof(useBroadcast));
+                    */
 
                     clientSock.setBlocking(false);
 

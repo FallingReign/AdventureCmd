@@ -1,15 +1,15 @@
-﻿Build started 9/25/2014 1:33:50 AM.
+﻿Build started 9/25/2014 11:23:43 AM.
      1>Project "J:\CodeBase\projects\Adventure\Adventure\Adventure.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>j:\codebase\projects\adventure\adventure\main.cpp(1133): warning C4018: '<' : signed/unsigned mismatch
-     1>j:\codebase\projects\adventure\adventure\main.cpp(1168): warning C4244: '+=' : conversion from 'double' to 'int', possible loss of data
-     1>j:\codebase\projects\adventure\adventure\main.cpp(908): warning C4101: 'cLoc' : unreferenced local variable
-     1>j:\codebase\projects\adventure\adventure\main.cpp(1571): warning C4018: '<' : signed/unsigned mismatch
-     1>j:\codebase\projects\adventure\adventure\main.cpp(1582): warning C4018: '<' : signed/unsigned mismatch
-     1>j:\codebase\projects\adventure\adventure\main.cpp(1714): warning C4018: '<' : signed/unsigned mismatch
-     1>j:\codebase\projects\adventure\adventure\main.cpp(1871): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1164): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1199): warning C4244: '+=' : conversion from 'double' to 'int', possible loss of data
+     1>j:\codebase\projects\adventure\adventure\main.cpp(932): warning C4101: 'cLoc' : unreferenced local variable
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1602): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1613): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1745): warning C4018: '<' : signed/unsigned mismatch
+     1>j:\codebase\projects\adventure\adventure\main.cpp(1902): warning C4018: '<' : signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\CodeBase\projects\Adventure\Debug\Adventure.exe" /INCREMENTAL /NOLOGO AdventureNet_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"J:\CodeBase\projects\Adventure\Debug\Adventure.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\CodeBase\projects\Adventure\Debug\Adventure.lib" /MACHINE:X86 Debug\Character.obj
          Debug\NPC.obj
@@ -62,4 +62,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.42
+Time Elapsed 00:00:01.38
